@@ -10,7 +10,7 @@ pipeline {
             steps{
                 script {
                     withCredentials([string(credentialsId: 'sonar-server', variable: 'sonarqube')]) {
-                        sh 'maven clean package sonar:sonar'
+                        sh 'mvn clean package sonar:sonar'
                     }
                 }
             }
