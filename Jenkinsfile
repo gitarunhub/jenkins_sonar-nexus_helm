@@ -42,6 +42,7 @@ pipeline {
                          docker login -u admin -p ${nexus} 192.168.1.24:8085
                          docker push 192.168.1.24:8085/springboot:${VERSION}
                          docker rmi springboot:${VERSION}
+                         '''
 
                     } 
                     
