@@ -22,5 +22,12 @@ pipeline {
                 }
             }
         }
+        stage('mvn build'){
+            steps{
+                script{
+                    sh 'mvn clean build'
+                }
+            }
+        }
     }
 }
