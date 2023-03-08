@@ -15,5 +15,12 @@ pipeline {
                 }
             }
         }
+        stage(quality_gate_wait){
+            steps{
+                script{
+                    sh 'waitForQualityGate abortPipeline: false, credentialsId: 'sonar_server''
+                }
+            }
+        }
     }
 }
