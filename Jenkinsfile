@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        VERSION = "${env.BUILD_ID}"
+    }
+
     stages{
         stage('sonar_quality_check'){
             agent {
@@ -26,6 +30,21 @@ pipeline {
             steps{
                 script{
                     sh 'mvn clean install'
+                }
+            }
+        }
+        stage('docker_image'){
+            steps{
+                script {
+                    withCredentials([string(credentialsId: 'nexus_pass', variable: 'nexus')]){
+                        sh '''
+                         sudo docker build -t springboot:${VERSION} .
+                         docker login -u admin -p ${nexus} 192.168.1.24:8085
+                         '''
+
+                    } 
+                    
+                    
                 }
             }
         }
