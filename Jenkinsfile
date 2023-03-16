@@ -69,7 +69,7 @@ pipeline {
             steps{
                 script {
                     sshagent(['Kube-ssh']) {
-                        sh 'ssh -o StrictHostKeyChecking=no -l cloudbees 192.168.1.106 uname -a'
+                        sh 'ssh -o StrictHostKeyChecking=no  kube@192.168.1.21 uname -a'
                     }
                 }
                 
