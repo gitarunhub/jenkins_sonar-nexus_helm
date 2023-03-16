@@ -65,5 +65,15 @@ pipeline {
                 }
             }
         }
+        stage(deploy){
+            steps{
+                script {
+                    sshagent(['Kube-ssh']) {
+                        sh 'ssh -o StrictHostKeyChecking=no -l cloudbees 192.168.1.106 uname -a'
+                    }
+                }
+                
+            }
+        }
     }
 }
