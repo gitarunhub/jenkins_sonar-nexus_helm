@@ -73,16 +73,16 @@ pipeline {
                         def remote = [:]
                         remote.name = 'test'
                         remote.host = '192.168.1.21'
-                        withCredentials([string(credentialsId: 'cluster_p', variable: 'cluster_p')]) {
-                            remote.user = 'kube'
-                            remote.password = '${cluster_p}'
-                            remote.allowAnyHosts = true
-                            stage('Remote SSH') {
+                    
+                        remote.user = 'kube'
+                        remote.password = 'admin'
+                        remote.allowAnyHosts = true
+                        stage('Remote SSH') {
                             writeFile file: 'abc.sh', text: 'ls -lrt'
                             sshPut remote: remote, from: './kubernetes/myapp', into: '/home/kube/'
                             }
 
-                        }
+                        
                     
 
 
