@@ -73,8 +73,8 @@ pipeline {
                         def remote = [:]
                         remote.name = 'test'
                         remote.host = '192.168.1.21'
-                        remote.user = kube
-                        remote.password = password
+                        remote.user = '${kube}'
+                        remote.password = '${password}'
                         remote.allowAnyHosts = true
                         stage('Remote SSH') {
                             writeFile file: 'abc.sh', text: 'ls -lrt'
