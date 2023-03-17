@@ -65,6 +65,27 @@ pipeline {
                 }
             }
         }
+
+        stage(transfer helm chart ) {
+            steps{
+                script{
+                    withCredentials([sshUserPrivateKey(credentialsId: 'Kube-ssh', keyFileVariable: 'ssh_password')]) {
+                        def remote = [:]
+                        remote.name = 'test'
+                        remote.host = '192.168.1.21'
+                        remote.user = 'kube'
+                        remote.password = '${ssh_password}'
+                        remote.allowAnyHosts = true
+                        stage('Remote SSH') {
+                            writeFile file: 'abc.sh', text: 'ls -lrt'
+                            sshPut remote: remote, from: './kubernetes/myapp', into: '.'
+                            }
+                    }
+
+
+                }
+            }
+        }
         stage(deploy){
             steps{
                 script {
