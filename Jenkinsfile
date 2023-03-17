@@ -78,7 +78,7 @@ pipeline {
                         remote.allowAnyHosts = true
                         stage('Remote SSH') {
                             writeFile file: 'abc.sh', text: 'ls -lrt'
-                            sshPut remote: remote, from: './kubernetes/myapp', into: '.'
+                            sshPut remote: remote, from: './kubernetes/myapp', into: '/home/kube/'
                             }
                     }
 
