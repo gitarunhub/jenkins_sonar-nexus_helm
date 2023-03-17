@@ -66,7 +66,7 @@ pipeline {
             }
         }
 
-        stage(transfer helm chart ) {
+        stage(transfer_helm_chart ) {
             steps{
                 script{
                     withCredentials([sshUserPrivateKey(credentialsId: 'Kube-ssh', keyFileVariable: 'ssh_password')]) {
