@@ -69,12 +69,12 @@ pipeline {
         stage(transfer_helm_chart ) {
             steps{
                 script{
-                    withCredentials([string(credentialsId: 'kube_ssh_1', variable: 'kube_password')]) {
+                    withCredentials([sshUserPrivateKey(credentialsId: 'ssh_cluster', keyFileVariable: 'password', usernameVariable: 'kube')]) {
                         def remote = [:]
                         remote.name = 'test'
                         remote.host = '192.168.1.21'
-                        remote.user = 'kube'
-                        remote.password = '${kube_password}'
+                        remote.user = kube
+                        remote.password = password
                         remote.allowAnyHosts = true
                         stage('Remote SSH') {
                             writeFile file: 'abc.sh', text: 'ls -lrt'
