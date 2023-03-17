@@ -71,7 +71,11 @@ pipeline {
                     sshagent(['Kube-ssh']) {
                         withCredentials([string(credentialsId: 'nexus_pass', variable: 'nexus')]){
                             dir('./kubernetes') {
-                                sh 'ssh -o StrictHostKeyChecking=no kube@192.168.1.21 helm upgrade --install --set IMAGE_NAME=192.168.1.24:8085/springboot --set IMAGE_TAG=${VERSION} springboot myapp'
+                            sh '''     
+                            ssh -o StrictHostKeyChecking=no kube@192.168.1.21 sudo docker login -u admin -p ${nexus} 192.168.1.24:8085
+                            ssh -o StrictHostKeyChecking=no kube@192.168.1.21 sudo docker pull 192.168.1.24:8085/springboot:${VERSION}
+                            ssh -o StrictHostKeyChecking=no kube@192.168.1.21 helm repo add helm-repo http://192.168.1.24:8081/repository/helm-repo/ --username admin --password ${nexus}
+                            '''
                             }                      
                         }                      
                     }
