@@ -100,7 +100,7 @@ pipeline {
                             ssh -o StrictHostKeyChecking=no kube@192.168.1.21 sudo docker pull 192.168.1.24:8085/springboot:${VERSION}
                             ssh -o StrictHostKeyChecking=no kube@192.168.1.21 helm repo add helm-repo http://192.168.1.24:8081/repository/helm-repo/ --username admin --password ${nexus}
                              
-                            ssh -o StrictHostKeyChecking=no kube@192.168.1.21 helm upgrade --install --set IMAGE_NAME=192.168.1.24:8085/springboot:${VERSION} --set IMAGE_TAG=${VERSION} springboot myapp/
+                            ssh -o StrictHostKeyChecking=no kube@192.168.1.21 helm upgrade --install --set image.repository=192.168.1.24:8085/springboot:${VERSION} --set image.tag=${VERSION} springboot myapp/
                             '''
                             }                      
                         }                      
